@@ -18,17 +18,15 @@ import { SCREENS } from "../constants";
 
 function Home(props) {
   return (
-  
-      <View style={styles.container}>
-        <Text style={styles.title}>Go to your first restaurant!</Text>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate(SCREENS.PICK)}
-          style={styles.buttonGrey}
-        >
-          <Text style={styles.buttonText}>Choose a Restaurant</Text>
-        </TouchableOpacity>
-      </View>
-
+    <View style={styles.container}>
+      <Text style={styles.title}>Go to your first restaurant!</Text>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate(SCREENS.PICK)}
+        style={styles.buttonGrey}
+      >
+        <Text style={styles.buttonText}>Choose a Restaurant</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -41,7 +39,7 @@ async function logOut(props) {
   //   return parsedResult.username;
   // });
 
-  fetch("http://192.168.1.23:3000/db/logout", {
+  fetch("http://192.168.1.59:3000/db/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

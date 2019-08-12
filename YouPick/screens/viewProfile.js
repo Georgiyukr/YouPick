@@ -29,13 +29,10 @@ class ViewProfile extends Component {
     super(props);
     this.state = {
       username: "bob",
-      imageUri: "file:///var/mobile/Containers/Data/Application/5BF0B077-31AB-4FF4-B9A7-76AFC10A0CC3/Library/Caches/ExponentExperienceData/%2540anonymous%252FYouPick-2da262d4-ec2f-4f20-8a1f-d707f221523a/ImagePicker/7E5BF4F2-40D1-4656-B4DE-A0BAFA7A86E7.jpg",
-      likedCuisines: [
-        { id: 55, name: "Italian" },
-        { id: 25, name: "Chinese" }
-      ],
-      priceRange: [{ id: 1, name: "$" },
-      { id: 2, name: "$$" }],
+      imageUri:
+        "file:///var/mobile/Containers/Data/Application/5BF0B077-31AB-4FF4-B9A7-76AFC10A0CC3/Library/Caches/ExponentExperienceData/%2540anonymous%252FYouPick-2da262d4-ec2f-4f20-8a1f-d707f221523a/ImagePicker/7E5BF4F2-40D1-4656-B4DE-A0BAFA7A86E7.jpg",
+      likedCuisines: [{ id: 55, name: "Italian" }, { id: 25, name: "Chinese" }],
+      priceRange: [{ id: 1, name: "$" }, { id: 2, name: "$$" }],
       restrictions: [{ id: 1, name: "None" }]
     };
   }
@@ -183,7 +180,7 @@ class ViewProfile extends Component {
                 />
               ))}
             </View>
-            <Text></Text>
+            <Text />
           </View>
 
           <Text style={styles.info}> My Price Range: </Text>

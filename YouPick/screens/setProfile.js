@@ -71,7 +71,7 @@ class SetProfile extends Component {
       name: "profilePic.jpg"
     });
     fd.append("data", JSON.stringify(this.state));
-    fetch("http://192.168.1.23:3000/db/setProfile", {
+    fetch("http://192.168.1.59:3000/db/setProfile", {
       method: "POST",
       // headers: {
       //   "Content-Type": "application/json"
@@ -85,17 +85,14 @@ class SetProfile extends Component {
         /* do something with responseJson and go back to the Login view but
          * make sure to check for responseJson.success! */
         // console.log("json", responseJson);
-         console.log(responseJson)
-
+        console.log(responseJson);
       })
       .catch(err => {
-        console.log("set Profile", err)
+        console.log("set Profile", err);
         alert(err);
       });
-        this.props.navigation.navigate(SCREENS.LOGIN)
-  }
-
-
+    this.props.navigation.navigate(SCREENS.LOGIN);
+  };
 
   render() {
     let isCompleted = true;
@@ -112,13 +109,13 @@ class SetProfile extends Component {
       { id: 25, name: "Chinese" },
       { id: 168, name: "Burger" },
       { id: 159, name: "Brazilian" },
-      {id: 247, name: "Bubble Tea"},
-      {id: 152, name: "African"},
-      {id: 193, name: "BBQ"},
-      {id: 182, name: "Breakfast"},
-      {id: 30, name: "Cafe"},
-      {id: 158, name: "Caribbean"},
-      {id: 100, name: "Desserts"},
+      { id: 247, name: "Bubble Tea" },
+      { id: 152, name: "African" },
+      { id: 193, name: "BBQ" },
+      { id: 182, name: "Breakfast" },
+      { id: 30, name: "Cafe" },
+      { id: 158, name: "Caribbean" },
+      { id: 100, name: "Desserts" },
       { id: 67, name: "Korean" },
       { id: 136, name: "Latin American" },
       { id: 70, name: "Mediterranean" },
@@ -136,7 +133,7 @@ class SetProfile extends Component {
       { id: 461, name: "Soulfood" },
       { id: 471, name: "Southern" },
       { id: 177, name: "Sushi" },
-      { id: 997, name: "Taco" },
+      { id: 997, name: "Taco" }
     ];
     let prices = [
       { id: 1, name: "$" },
@@ -157,7 +154,7 @@ class SetProfile extends Component {
         return;
       }
       var parsedResult = JSON.parse(result);
-      console.log(parsedResult)
+      console.log(parsedResult);
       this.setState({ username: parsedResult.username });
     });
     return (
@@ -170,7 +167,7 @@ class SetProfile extends Component {
         <View style={styles.container}>
           <View style={{ alignItems: "center" }}>
             {isCompleted ? (
-              <Text></Text>
+              <Text />
             ) : (
               <Text style={{ fontSize: 20, color: "white" }}>
                 ~Complete your profile!~
@@ -261,7 +258,7 @@ class SetProfile extends Component {
               <Text style={styles.buttonText}> DONE </Text>
             </TouchableOpacity>
           ) : (
-            <Text></Text>
+            <Text />
           )}
         </View>
       </ScrollView>

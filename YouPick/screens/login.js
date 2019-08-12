@@ -90,41 +90,41 @@ class Login extends Component {
 
   render() {
     return (
-      <ImageBackground
-        source={require("../assets/youpick-bg.png")}
-        resizeMode="cover"
-        style={{ width: "100%", height: "100%", flex: 1 }}
-      >
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your username"
-            onChangeText={text => this.setState({ username: text })}
-            value={this.state.username}
-          />
+      // <ImageBackground
+      //   source={require("../assets/youpick-bg.png")}
+      //   resizeMode="cover"
+      //   style={{ width: "100%", height: "100%", flex: 1 }}
+      // >
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your username"
+          onChangeText={text => this.setState({ username: text })}
+          value={this.state.username}
+        />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            onChangeText={text => this.setState({ password: text })}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          onChangeText={text => this.setState({ password: text })}
+          value={this.state.password}
+          secureTextEntry={true}
+        />
 
-          <TouchableOpacity
-            onPress={() => this.login(this.state.username, this.state.password)}
-            style={styles.buttonGrey}
-          >
-            <Text style={styles.buttonText}> Log In </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate(SCREENS.REGISTER)}
-            style={styles.buttonBlue}
-          >
-            <Text style={styles.buttonText}> Sign Up </Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+        <TouchableOpacity
+          onPress={() => this.login(this.state.username, this.state.password)}
+          style={styles.buttonGrey}
+        >
+          <Text style={styles.buttonText}> Log In </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate(SCREENS.REGISTER)}
+          style={styles.buttonBlue}
+        >
+          <Text style={styles.buttonText}> Sign Up </Text>
+        </TouchableOpacity>
+      </View>
+      // </ImageBackground>
     );
   }
 }
