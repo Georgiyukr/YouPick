@@ -97,7 +97,7 @@ class Login extends Component {
           backgroundColor="#a2444a"
           centerComponent={{
             text: "Login",
-            style: { color: "white", fontSize: 20 }
+            style: { color: "white", fontSize: 20, fontWeight: "bold" }
           }}
         />
         <View style={styles.container}>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     width: 315,
-    paddingBottom: 3
+    paddingBottom: 10
   },
   input: {
     fontSize: 15,
@@ -178,15 +178,14 @@ const styles = StyleSheet.create({
   buttonBlack: {
     alignSelf: "stretch",
     padding: 10,
-    margin: 10,
     borderRadius: 5,
     backgroundColor: "#605152",
-    height: 43
+    height: 43,
+    marginBottom: 8
   },
   buttonRed: {
     alignSelf: "stretch",
     padding: 10,
-    margin: 10,
     borderRadius: 5,
     backgroundColor: "#a2444a",
     height: 43

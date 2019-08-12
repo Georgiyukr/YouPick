@@ -66,22 +66,27 @@ class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your username"
-          onChangeText={text => this.setState({ username: text })}
-          value={this.state.username}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your password"
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password}
-          secureTextEntry={true}
-        />
+        <View style={styles.inputBoxes}>
+          {/* Username Input */}
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your username"
+            onChangeText={text => this.setState({ username: text })}
+            value={this.state.username}
+          />
+          {/* Password Input */}
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your password"
+            onChangeText={text => this.setState({ password: text })}
+            value={this.state.password}
+            secureTextEntry={true}
+          />
+        </View>
+        {/* Sign up button */}
         <TouchableOpacity
           onPress={() => this.register()}
-          style={styles.buttonGrey}
+          style={styles.buttonBlack}
         >
           <Text style={styles.buttonText}> Sign Up </Text>
         </TouchableOpacity>
@@ -95,41 +100,24 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-between",
+    backgroundColor: "#fff4f5"
   },
 
   buttons: {
     fontSize: 40
   },
-
-  headers: {
-    fontSize: 50,
-    textAlign: "center"
-  },
   input: {
     fontSize: 15,
-    width: 400,
+    marginBottom: 10,
+    width: 200,
     height: 40,
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white"
-  },
-  users: {
-    borderColor: "black",
-    borderWidth: 0.5,
-    borderStyle: "solid",
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  messages: {
-    fontSize: 10,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: "#d6d7da",
-    margin: 5,
-    backgroundColor: "white"
+    backgroundColor: "#fff4f5",
+    borderBottomWidth: 2,
+    borderColor: "#a2444a"
   },
   buttonGreen: {
     alignSelf: "stretch",
@@ -140,33 +128,32 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 20,
     color: "white"
   },
-  buttonBlue: {
+  buttonBlack: {
     alignSelf: "stretch",
     padding: 10,
     margin: 10,
     borderRadius: 5,
-    backgroundColor: "#368FD5"
+    backgroundColor: "#605152",
+    height: 43
   },
-  buttonRed: {
-    alignSelf: "stretch",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "red"
-  },
-  buttonGrey: {
-    alignSelf: "stretch",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "grey"
-  },
-  text: {
-    marginLeft: 10
+  inputBoxes: {
+    paddingTop: 80
   }
 });
+
+Register.navigationOptions = {
+  title: "Register",
+  headerStyle: {
+    backgroundColor: "#a2444a"
+  },
+  headerTitleStyle: {
+    fontSize: 20,
+    color: "white"
+  },
+  headerTintColor: "white"
+};
 
 export default Register;
