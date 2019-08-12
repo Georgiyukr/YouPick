@@ -15,6 +15,7 @@ import {
   ImageBackground
 } from "react-native";
 import { SCREENS } from "../constants";
+import { Header } from "react-native-elements";
 
 class Login extends Component {
   constructor(props) {
@@ -90,41 +91,54 @@ class Login extends Component {
 
   render() {
     return (
-      // <ImageBackground
-      //   source={require("../assets/youpick-bg.png")}
-      //   resizeMode="cover"
-      //   style={{ width: "100%", height: "100%", flex: 1 }}
-      // >
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your username"
-          onChangeText={text => this.setState({ username: text })}
-          value={this.state.username}
+      <React.Fragment>
+        <Header
+          style={{ flex: 1, margin: 0 }}
+          backgroundColor="#a2444a"
+          centerComponent={{
+            text: "Login",
+            style: { color: "white", fontSize: 20 }
+          }}
         />
+        <View style={styles.container}>
+          <View style={styles.inputBoxes}>
+            {/* Username Input */}
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your username"
+              onChangeText={text => this.setState({ username: text })}
+              value={this.state.username}
+            />
+            {/* Password Input */}
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your password"
+              onChangeText={text => this.setState({ password: text })}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={styles.actionButtons}>
+            {/* Login button */}
+            <TouchableOpacity
+              onPress={() =>
+                this.login(this.state.username, this.state.password)
+              }
+              style={styles.buttonBlack}
+            >
+              <Text style={styles.buttonText}> Log In </Text>
+            </TouchableOpacity>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your password"
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password}
-          secureTextEntry={true}
-        />
-
-        <TouchableOpacity
-          onPress={() => this.login(this.state.username, this.state.password)}
-          style={styles.buttonGrey}
-        >
-          <Text style={styles.buttonText}> Log In </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate(SCREENS.REGISTER)}
-          style={styles.buttonBlue}
-        >
-          <Text style={styles.buttonText}> Sign Up </Text>
-        </TouchableOpacity>
-      </View>
-      // </ImageBackground>
+            {/* Sign up button */}
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate(SCREENS.REGISTER)}
+              style={styles.buttonRed}
+            >
+              <Text style={styles.buttonText}> Sign Up </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </React.Fragment>
     );
   }
 }
@@ -132,80 +146,59 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
+    flexDirection: "column",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-between",
+    backgroundColor: "#fff4f5"
   },
-
-  buttons: {
-    fontSize: 40
-  },
-
-  headers: {
-    fontSize: 50,
-    textAlign: "center"
+  actionButtons: {
+    width: 315,
+    paddingBottom: 3
   },
   input: {
     fontSize: 15,
-    width: 400,
+    marginBottom: 10,
+    width: 200,
     height: 40,
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white"
+    backgroundColor: "#fff4f5",
+    borderBottomWidth: 2,
+    borderColor: "#a2444a"
   },
-  users: {
-    borderColor: "black",
-    borderWidth: 0.5,
-    borderStyle: "solid",
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  messages: {
-    fontSize: 10,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: "#d6d7da",
-    margin: 5,
-    backgroundColor: "white"
-  },
-  buttonGreen: {
-    alignSelf: "stretch",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "#40D654"
-  },
+
   buttonText: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 20,
     color: "white"
   },
-  buttonBlue: {
+
+  buttonBlack: {
     alignSelf: "stretch",
     padding: 10,
     margin: 10,
     borderRadius: 5,
-    backgroundColor: "#368FD5"
+    backgroundColor: "#605152",
+    height: 43
   },
   buttonRed: {
     alignSelf: "stretch",
     padding: 10,
     margin: 10,
     borderRadius: 5,
-    backgroundColor: "red"
+    backgroundColor: "#a2444a",
+    height: 43
   },
-  buttonGrey: {
-    alignSelf: "stretch",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "grey"
-  },
-  text: {
-    marginLeft: 10
+  inputBoxes: {
+    paddingTop: 80
   }
 });
+
+Login.navigationOptions = {
+  header: null
+  // headerVisible: false
+};
 
 export default Login;
