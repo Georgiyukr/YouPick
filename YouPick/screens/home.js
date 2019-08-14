@@ -74,7 +74,7 @@ function Home(props) {
         <Text style={styles.visitedText}>Visited Restraunts</Text>
       </ScrollView>
 
-      <TouchableOpacity onPress={() => this.pick()} style={styles.buttonBlack}>
+      <TouchableOpacity onPress={() => this.pick()} style={styles.buttonRed}>
         <Text style={styles.buttonText}>Pick Restraunt</Text>
       </TouchableOpacity>
     </View>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     color: "#605152",
     textAlign: "center"
   },
-  buttonBlack: {
+  buttonRed: {
     alignSelf: "stretch",
     padding: 10,
     borderRadius: 5,
