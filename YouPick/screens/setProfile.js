@@ -276,7 +276,8 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     fontSize: 20,
-    color: "white"
+    color: "white",
+    fontWeight: "bold"
   },
   buttonBlack: {
     alignSelf: "stretch",
