@@ -32,7 +32,7 @@ class Pick extends React.Component {
       locationArea: ""
     };
     this.restaurants = [];
-    this.restaurantToGo ={}
+    this.restaurantToGo = {};
   }
 
   async currentLocation() {
@@ -130,7 +130,9 @@ class Pick extends React.Component {
       // );
 
       this.restaurantToGo = this.restaurants[ranNum].restaurant.name;
-      this.props.navigation.navigate(SCREENS.RESTAURANT, {restaurantToGo: this.restaurantToGo});
+      this.props.navigation.navigate(SCREENS.RESTAURANT, {
+        restaurantToGo: this.restaurantToGo
+      });
     });
   }
 
@@ -166,7 +168,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#fff4f5"
   },
 
   buttons: {

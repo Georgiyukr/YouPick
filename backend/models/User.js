@@ -18,14 +18,12 @@ const userSchema = new mongoose.Schema({
     type: Array,
     required: false
   },
-  restrictions: {
-    type: Array,
-    required: false
-  },
-  imageUri: {
-    type: String,
-    required: false
-  }
+  visitedRestraunts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "VisitedRestaurants"
+    }
+  ]
 });
 
 const User = mongoose.model("User", userSchema);

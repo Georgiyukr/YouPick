@@ -45,7 +45,6 @@ class Register extends Component {
       .then(responseJson => {
         /* do something with responseJson and go back to the Login view but
          * make sure to check for responseJson.success! */
-        // console.log("json", responseJson);
 
         if (responseJson.success === true && responseJson.user) {
           AsyncStorage.setItem(
@@ -134,10 +133,12 @@ const styles = StyleSheet.create({
   buttonBlack: {
     alignSelf: "stretch",
     padding: 10,
-    margin: 10,
     borderRadius: 5,
     backgroundColor: "#605152",
-    height: 43
+    height: 43,
+    width: 300,
+    marginBottom: 10,
+    marginLeft: 10
   },
   inputBoxes: {
     paddingTop: 80

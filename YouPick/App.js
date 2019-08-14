@@ -3,7 +3,15 @@ import {
   createStackNavigator,
   createAppContainer
 } from "react-navigation";
-import { Login, Register, Home, SetProfile, Pick, ViewProfile, Restaurant } from "./screens";
+import {
+  Login,
+  Register,
+  Home,
+  SetProfile,
+  Pick,
+  ViewProfile,
+  Restaurant
+} from "./screens";
 import { SCREENS } from "./constants";
 
 const AuthNavigator = createStackNavigator(

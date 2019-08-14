@@ -19,26 +19,12 @@ import { SCREENS } from "../constants";
 function Home(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Go to your first restaurant!</Text>
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate(SCREENS.PICK)}
-        style={styles.buttonGrey}
-      >
-        <Text style={styles.buttonText}>Choose a Restaurant</Text>
-      </TouchableOpacity>
+      <Text>Hello</Text>
     </View>
   );
 }
 
 async function logOut(props) {
-  // const username = await AsyncStorage.getItem("user").then(result => {
-  //   if (result === null) {
-  //     return;
-  //   }
-  //   var parsedResult = JSON.parse(result);
-  //   return parsedResult.username;
-  // });
-
   fetch("http://192.168.1.59:3000/db/logout", {
     method: "POST",
     headers: {
@@ -63,13 +49,30 @@ async function logOut(props) {
 
 Home.navigationOptions = props => ({
   title: "Home",
+  headerStyle: {
+    backgroundColor: "#a2444a"
+  },
+  headerTitleStyle: {
+    fontSize: 20,
+    color: "white"
+  },
+  headerTintColor: "white",
   headerRight: (
     <Button
       title="View Profile"
+      color="white"
+      style={{ fontSize: 15 }}
       onPress={() => props.navigation.navigate(SCREENS.VIEWPROFILE)}
     />
   ),
-  headerLeft: <Button title="Log Out" onPress={() => logOut(props)} />
+  headerLeft: (
+    <Button
+      title="Log Out"
+      color="white"
+      style={{ fontSize: 15 }}
+      onPress={() => logOut(props)}
+    />
+  )
 });
 export default Home;
 
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#a2444b"
+    backgroundColor: "#fff4f5"
   },
 
   buttons: {

@@ -46,10 +46,6 @@ class Login extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        /* do something with responseJson and go back to the Login view but
-         * make sure to check for responseJson.success! */
-        // console.log("json", responseJson);
-
         if (responseJson.success === true && responseJson.user) {
           AsyncStorage.setItem(
             "user",
@@ -82,7 +78,6 @@ class Login extends Component {
         if (username && password) {
           return this.login(username, password);
         }
-        // Don't really need an else clause, we don't do anything in this case.
       })
       .catch(err => {
         alert(err);
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff4f5"
   },
   actionButtons: {
-    width: 315,
+    width: 300,
     paddingBottom: 10
   },
   input: {
