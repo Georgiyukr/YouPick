@@ -21,6 +21,7 @@ module.exports = function(passport, hash) {
 
   router.post("/login", passport.authenticate("local"), function(req, res) {
     if (req.user) {
+      console.log(`User: ${req.user.username} is logged in!`);
       res.json({ success: true, user: req.user });
     } else {
       res.json({ success: false });

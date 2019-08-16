@@ -65,22 +65,28 @@ class Home extends React.Component {
 
   async componentDidMount() {
     await this.currentLocation();
-    await AsyncStorage.getItem("user").then(result => {
-      if (result === null) {
-        return;
-      }
+    const user = await AsyncStorage.getItem("user");
 
-      var parsedResult = JSON.parse(result);
-      this.setState({ username: parsedResult.username });
-    });
+    console.log("user", user);
 
-    await fetch(`http://192.168.1.59:3000/db/setProfile/${this.state.username}`)
+    if (user === null) {
+      console.log("no user!!");
+      return;
+    }
+
+    var parsedResult = JSON.parse(user);
+    alert(
+      `fetching http://192.168.1.59:3000/db/setProfile/${parsedResult.username}`
+    );
+    await fetch(
+      `http://192.168.1.59:3000/db/setProfile/${parsedResult.username}`
+    )
       .then(response => response.json())
       .then(responseJson => {
+        console.log("JSON", responseJson);
         let foodLiked = responseJson["likedCuisines"];
         let priceRange = responseJson["priceRange"];
         this.setState({ foodLiked, priceRange });
-        //console.log(foodLiked);
       })
       .catch(err => console.log("FETCH FOOD ERROR", err));
   }
@@ -145,67 +151,86 @@ class Home extends React.Component {
     //   .getLocationDetails({ entity_id: 36932, entity_type: "group" })
     //   .then(res => console.log(res))
     //   .catch(err => console.log(err));
+    console.log("FOOOOOOD", this.state.foodLiked);
+    let res1 = client.search({
+      // entity_id: this.state.entity_id,
+      // entity_type: this.state.entity_type,
+      lat: this.state.region.latitude,
+      lon: this.state.region.longitude,
+      count: 20,
+      cuisines: this.state.foodLiked,
+      radius: 5000
+    });
+    console.log("RESPONSE", res1.json());
 
-    // Promise.all([
-    //   client.search({
-    //     query: "koreatown",
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   }),
-    //   client.search({
-    //     query: "koreatown",
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     start: 20,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   }),
-    //   client.search({
-    //     query: "koreatown",
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     start: 40,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   }),
-    //   client.search({
-    //     query: "koreatown",
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     start: 60,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   }),
-    //   client.search({
-    //     query: "koreatown",
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     start: 80,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   })
-    // ]).then(([res1, res2, res3, res4, res5]) => {
-    //   // console.log(
-    //   //   "RESTAURANTS",
-    //   //   res.restaurants,
-    //   //   "restaurant length ",
-    //   //   res.restaurants.length
-    //   // )
-    //   this.restaurants = [
-    //     ...res1.restaurants,
-    //     ...res2.restaurants,
-    //     ...res3.restaurants,
-    //     ...res4.restaurants,
-    //     ...res5.restaurants
-    //   ];
-    // });
+    //   Promise.all([
+    //     client.search({
+    //       entity_id: this.state.entity_id,
+    //       entity_type: this.state.entity_type,
+    //       lat: this.state.region.latitude,
+    //       lon: this.state.region.longitude,
+    //       count: 20,
+    //       cuisines: this.state.foodLiked,
+    //       radius: 5000
+    //     }),
+    //     client.search({
+    //       entity_id: this.state.entity_id,
+    //       entity_type: this.state.entity_type,
+    //       lat: this.state.region.latitude,
+    //       lon: this.state.region.longitude,
+    //       count: 20,
+    //       start: 20,
+    //       cuisines: this.state.foodLiked,
+    //       radius: 5000
+    //     }),
+    //     client.search({
+    //       entity_id: this.state.entity_id,
+    //       entity_type: this.state.entity_type,
+    //       lat: this.state.region.latitude,
+    //       lon: this.state.region.longitude,
+    //       count: 20,
+    //       start: 40,
+    //       cuisines: this.state.foodLiked,
+    //       radius: 5000
+    //     }),
+    //     client.search({
+    //       entity_id: this.state.entity_id,
+    //       entity_type: this.state.entity_type,
+    //       lat: this.state.region.latitude,
+    //       lon: this.state.region.longitude,
+    //       count: 20,
+    //       start: 60,
+    //       cuisines: this.state.foodLiked,
+    //       radius: 5000
+    //     }),
+    //     client.search({
+    //       entity_id: this.state.entity_id,
+    //       entity_type: this.state.entity_type,
+    //       lat: this.state.region.latitude,
+    //       lon: this.state.region.longitude,
+    //       count: 20,
+    //       start: 80,
+    //       cuisines: this.state.foodLiked,
+    //       radius: 5000
+    //     })
+    //   ])
+    //     .then(([res1, res2, res3, res4, res5]) => {
+    //       console.log(
+    //         "RESTAURANTS",
+    //         res.restaurants,
+    //         "restaurant length ",
+    //         res.restaurants.length
+    //       );
+    //       // this.restaurants = [
+    //       //   ...res1.restaurants,
+    //       //   ...res2.restaurants,
+    //       //   ...res3.restaurants,
+    //       //   ...res4.restaurants,
+    //       //   ...res5.restaurants
+    //       // ];
+    //       // console.log("RESTAURANTS", this.restaurants);
+    //     })
+    //     .catch(err => console.log("ERROR in RESTAURANT SEARCH", err));
   }
 
   render() {
