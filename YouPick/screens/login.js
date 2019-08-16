@@ -78,7 +78,7 @@ class Login extends Component {
         var username = parsedResult.username;
         var password = parsedResult.password;
         if (username && password) {
-          alert(username + "/" + password);
+          // alert(username + "/" + password);
           return this.login(username, password);
         }
       })

@@ -18,7 +18,7 @@ import { SCREENS } from "../constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import zomato from "zomato-api";
-var client = zomato({ userKey: "edf93ee64341e71e145d65045b494dde" });
+var client = zomato({ userKey: "ca4658ce2aaad149ff89d86a0de8d2a3" });
 
 // log out function
 async function logOut(props) {
@@ -67,17 +67,12 @@ class Home extends React.Component {
     await this.currentLocation();
     const user = await AsyncStorage.getItem("user");
 
-    console.log("user", user);
-
     if (user === null) {
       console.log("no user!!");
       return;
     }
 
     var parsedResult = JSON.parse(user);
-    alert(
-      `fetching http://192.168.1.59:3000/db/setProfile/${parsedResult.username}`
-    );
     await fetch(
       `http://192.168.1.59:3000/db/setProfile/${parsedResult.username}`
     )
@@ -151,17 +146,46 @@ class Home extends React.Component {
     //   .getLocationDetails({ entity_id: 36932, entity_type: "group" })
     //   .then(res => console.log(res))
     //   .catch(err => console.log(err));
-    console.log("FOOOOOOD", this.state.foodLiked);
-    let res1 = client.search({
-      // entity_id: this.state.entity_id,
-      // entity_type: this.state.entity_type,
-      lat: this.state.region.latitude,
-      lon: this.state.region.longitude,
-      count: 20,
-      cuisines: this.state.foodLiked,
-      radius: 5000
-    });
-    console.log("RESPONSE", res1.json());
+    // client
+    //   .search({
+    //     entity_id: this.state.entity_id,
+    //     entity_type: this.state.entity_type,
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   })
+    //   .then(res => console.log("FOOD", res))
+    //   .catch(err => console.log(err));
+    // console.log("RESPONSE", res1.json());
+    // console.log("FOOOOD", this.state.foodLiked);
+    // console.log(
+    //   this.state.entity_id,
+    //   this.state.entity_type,
+    //   this.state.region.latitude,
+    //   this.state.region.longitude,
+    //   this.state.foodLiked
+    // );
+
+    let url1 = "https://developers.zomato.com/api/v2.1/search?";
+    let url2 = "https://developers.zomato.com/api/v2.1/search?";
+    let url3 = "https://developers.zomato.com/api/v2.1/search?";
+    let url4 = "https://developers.zomato.com/api/v2.1/search?";
+    let url5 = "https://developers.zomato.com/api/v2.1/search?";
+    // url += `user-key=ca4658ce2aaad149ff89d86a0de8d2a3`;
+    url1 += `entity_id=${this.state.entity_id}`;
+    url1 += `&entity_type=${this.state.entity_type}`;
+    url1 += `&lat=${this.state.region.latitude}`;
+    url1 += `&lon=${this.state.region.longitude}`;
+    url1 += `&count=20`;
+    url1 += `&cuisines=${this.state.foodLiked}`;
+    url1 += `&radius=5000`;
+
+    fetch(url1, { headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" } })
+      .then(res => JSON.stringify(res))
+      .then(resJson => console.log(resJson))
+      .catch(err => console.log(err));
 
     //   Promise.all([
     //     client.search({
