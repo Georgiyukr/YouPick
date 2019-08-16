@@ -11,8 +11,7 @@ import {
   ScrollView,
   RefreshControl,
   AsyncStorage,
-  Image,
-  ImageBackground
+  Image
 } from "react-native";
 import { SCREENS } from "../constants";
 import * as Location from "expo-location";
@@ -138,26 +137,20 @@ class Pick extends React.Component {
 
   render() {
     return (
-      <ImageBackground
-        source={require("../assets/youpick-bg.png")}
-        resizeMode="cover"
-        style={{ width: "100%", height: "100%", flex: 1 }}
-      >
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter the area you want get restaurants from"
-            onChangeText={text => this.setState({ locationArea: text })}
-            value={this.state.locationArea}
-          />
-          <TouchableOpacity
-            onPress={() => this.search()}
-            style={styles.buttonGrey}
-          >
-            <Text style={styles.buttonText}>Search</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter the area you want get restaurants from"
+          onChangeText={text => this.setState({ locationArea: text })}
+          value={this.state.locationArea}
+        />
+        <TouchableOpacity
+          onPress={() => this.search()}
+          style={styles.buttonGrey}
+        >
+          <Text style={styles.buttonText}>Search</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }

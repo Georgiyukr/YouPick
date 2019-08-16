@@ -92,40 +92,88 @@ class SetProfile extends Component {
         // these are the children or 'sub items'
         children: [
           {
-            name: "Italian",
-            id: 10
-          },
-          {
-            name: "Chinese",
-            id: 11
-          },
-          {
-            name: "Japanese",
-            id: 13
-          },
-          {
-            name: "Greek",
-            id: 14
-          },
-          {
-            name: "Persian",
-            id: 15
-          },
-          {
-            name: "Korean",
-            id: 16
+            name: "African",
+            id: 152
           },
           {
             name: "American",
-            id: 17
+            id: 1
           },
           {
-            name: "Mexican",
-            id: 18
+            name: "Afghan",
+            id: 1035
           },
           {
             name: "BBQ",
-            id: 19
+            id: 193
+          },
+          {
+            name: "Brazilian",
+            id: 159
+          },
+          {
+            name: "Burger",
+            id: 168
+          },
+          {
+            name: "Chinese",
+            id: 25
+          },
+          {
+            name: "European",
+            id: 38
+          },
+          {
+            name: "French",
+            id: 45
+          },
+          {
+            name: "German",
+            id: 134
+          },
+          {
+            name: "Greek",
+            id: 156
+          },
+          {
+            name: "Healthy Food",
+            id: 143
+          },
+          {
+            name: "Indian",
+            id: 148
+          },
+          {
+            name: "Iranian",
+            id: 140
+          },
+          {
+            name: "Italian",
+            id: 55
+          },
+          {
+            name: "Korean",
+            id: 67
+          },
+          {
+            name: "Japanese",
+            id: 60
+          },
+          {
+            name: "Mediterranean",
+            id: 70
+          },
+          {
+            name: "Mexican",
+            id: 73
+          },
+          {
+            name: "Middle Eastern",
+            id: 137
+          },
+          {
+            name: "Pizza",
+            id: 82
           }
         ]
       }

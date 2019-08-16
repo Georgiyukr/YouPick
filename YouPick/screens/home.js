@@ -15,7 +15,218 @@ import {
   ImageBackground
 } from "react-native";
 import { SCREENS } from "../constants";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import zomato from "zomato-api";
+var client = zomato({ userKey: "edf93ee64341e71e145d65045b494dde" });
 
+// log out function
+async function logOut(props) {
+  fetch("http://192.168.1.59:3000/db/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    redirect: "follow"
+  })
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log(responseJson);
+      if (responseJson.success === true) {
+        props.navigation.navigate(SCREENS.LOGIN);
+      }
+    })
+    .catch(err => {
+      // console.log("from fetch", err);
+      alert(err);
+    });
+  AsyncStorage.setItem("user", "");
+}
+
+// Home function component
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: {
+        latitude: null,
+        longitude: null
+      },
+      username: "",
+      foodLiked: [],
+      priceRange: [],
+      entity_id: null,
+      entity_type: ""
+    };
+    this.restaurants = [];
+    this.restaurantToGo = {};
+  }
+
+  async componentDidMount() {
+    await this.currentLocation();
+    await AsyncStorage.getItem("user").then(result => {
+      if (result === null) {
+        return;
+      }
+
+      var parsedResult = JSON.parse(result);
+      this.setState({ username: parsedResult.username });
+    });
+
+    await fetch(`http://192.168.1.59:3000/db/setProfile/${this.state.username}`)
+      .then(response => response.json())
+      .then(responseJson => {
+        let foodLiked = responseJson["likedCuisines"];
+        let priceRange = responseJson["priceRange"];
+        this.setState({ foodLiked, priceRange });
+        //console.log(foodLiked);
+      })
+      .catch(err => console.log("FETCH FOOD ERROR", err));
+  }
+
+  //Getting users current Location
+  async currentLocation() {
+    //console.log("IN currentLocation()");
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    //console.log("STATUS", status);
+    if (status !== "granted") {
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    //console.log("got current position", location);
+    await this.setState({
+      region: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    });
+
+    client
+      .getGeocode({
+        lat: this.state.region.latitude,
+        lon: this.state.region.longitude
+      })
+      .then(res => {
+        this.setState({
+          entity_id: res["location"]["entity_id"],
+          entity_type: res["location"]["entity_type"]
+        });
+        //console.log(this.state.entity_id);
+      })
+      .catch(err => console.log(err));
+    // console.log("My location: ", this.state.region);
+  }
+
+  async search() {
+    console.log("HERE");
+    // client
+    //   .getCategories()
+    //   .then(response => console.log("CATEGORIES", response))
+    //   .catch(err => console.log("ERROR in getCATEGORIES", err));
+    //console.log(this.state.region.latitude, this.state.region.longitude);
+    // client
+    //   .getCities({
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude
+    //   })
+    //   .then(res => console.log("CITIES", res))
+    //   .catch(err => console.log(err));
+    // client
+    //   .getCuisines({ city_id: 288 })
+    //   .then(res => console.log("CUISINES", res))
+    //   .catch(err => console.log(err));
+    // client
+    //   .getEstablishments({ city_id: 288 })
+    //   .then(res => console.log("ESTABLISHMENTS", res))
+    //   .catch(err => console.log(err));
+    // client
+    //   .getLocationDetails({ entity_id: 36932, entity_type: "group" })
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
+
+    // Promise.all([
+    //   client.search({
+    //     query: "koreatown",
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   }),
+    //   client.search({
+    //     query: "koreatown",
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     start: 20,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   }),
+    //   client.search({
+    //     query: "koreatown",
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     start: 40,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   }),
+    //   client.search({
+    //     query: "koreatown",
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     start: 60,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   }),
+    //   client.search({
+    //     query: "koreatown",
+    //     lat: this.state.region.latitude,
+    //     lon: this.state.region.longitude,
+    //     count: 20,
+    //     start: 80,
+    //     cuisines: this.state.foodLiked,
+    //     radius: 5000
+    //   })
+    // ]).then(([res1, res2, res3, res4, res5]) => {
+    //   // console.log(
+    //   //   "RESTAURANTS",
+    //   //   res.restaurants,
+    //   //   "restaurant length ",
+    //   //   res.restaurants.length
+    //   // )
+    //   this.restaurants = [
+    //     ...res1.restaurants,
+    //     ...res2.restaurants,
+    //     ...res3.restaurants,
+    //     ...res4.restaurants,
+    //     ...res5.restaurants
+    //   ];
+    // });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+          <Text style={styles.visitedText}>Visited Restraunts</Text>
+        </ScrollView>
+
+        <TouchableOpacity
+          onPress={() => this.search()}
+          style={styles.buttonRed}
+        >
+          <Text style={styles.buttonText}>Pick Restraunt</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+// Top bar buttons and styles
 Home.navigationOptions = props => ({
   title: "Home",
   headerStyle: {
@@ -43,43 +254,6 @@ Home.navigationOptions = props => ({
     />
   )
 });
-
-async function logOut(props) {
-  fetch("http://192.168.1.59:3000/db/logout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include",
-    redirect: "follow"
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      console.log(responseJson);
-      if (responseJson.success === true) {
-        props.navigation.navigate(SCREENS.LOGIN);
-      }
-    })
-    .catch(err => {
-      // console.log("from fetch", err);
-      alert(err);
-    });
-  AsyncStorage.setItem("user", "");
-}
-
-function Home(props) {
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Text style={styles.visitedText}>Visited Restraunts</Text>
-      </ScrollView>
-
-      <TouchableOpacity onPress={() => this.pick()} style={styles.buttonRed}>
-        <Text style={styles.buttonText}>Pick Restraunt</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
 
 export default Home;
 

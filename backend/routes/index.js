@@ -25,6 +25,18 @@ router.post("/setProfile", (req, res) => {
   });
 });
 
+router.get("/setProfile/:username", (req, res) => {
+  let username = req.params.username;
+  console.log("USERNAME", username);
+  User.findOne({ username: username }, function(err, user) {
+    if (err) {
+      console.log("ERROR in GET ROUTE SETPROFILE", err);
+    } else {
+      res.json(user);
+    }
+  });
+});
+
 router.post("/visited", (req, res) => {
   const restaurant = new VisitedRestaurants({
     name: req.body.name,
