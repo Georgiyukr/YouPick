@@ -22,7 +22,7 @@ var client = zomato({ userKey: "ca4658ce2aaad149ff89d86a0de8d2a3" });
 
 // log out function
 async function logOut(props) {
-  fetch("http://143.215.50.121:3000/db/logout", {
+  fetch("http://143.215.51.246:3000/db/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
