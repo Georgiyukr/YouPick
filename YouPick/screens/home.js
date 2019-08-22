@@ -74,14 +74,14 @@ class Home extends React.Component {
 
     var parsedResult = JSON.parse(user);
     await fetch(
-      `http://10.2.127.10:3000/db/setProfile/${parsedResult.username}`
+      `http://143.215.51.246:3000/db/setProfile/${parsedResult.username}`
     )
       .then(response => response.json())
       .then(responseJson => {
         console.log("JSON", responseJson);
         let foodLiked = responseJson["likedCuisines"];
         let priceRange = responseJson["priceRange"];
-        this.setState({ foodLiked, priceRange });
+        this.setState({ foodLiked: foodLiked, priceRange: priceRange });
       })
       .catch(err => console.log("FETCH FOOD ERROR", err));
   }
@@ -199,28 +199,20 @@ class Home extends React.Component {
           ...res4.restaurants,
           ...res5.restaurants
         ];
-        console.log("RESTAURANTS", this.restaurants);
-        // let ranNum = Math.floor(Math.random() * 100);
-        // console.log(ranNum);
-        // let names = [];
-        // this.restaurants.forEach(restaurant =>
-        //   names.push(restaurant.restaurant.name)
-        // );
-        // console.log(
-        //   //   "restaurant length",
-        //   //   this.restaurants.length,
-        //   //   "one restaurant",
-        //   //   JSON.stringify(this.restaurants[20], null, 2),
-        //   // "one restaurant name",
-        //   // this.restaurants[ranNum].restaurant.name,
-        //   "names",
-        //   names
-        // );
-
-        // let ranNum = Math.floor(Math.random() * 100);
-        // this.restaurantToGo = this.restaurants[ranNum].restaurant.name;
-
-        // console.log("RESTAURANT", this.restaurantToGo);
+        let goPlace;
+        let found = false;
+        while (!found) {
+          let ranNum = Math.floor(Math.random() * this.restaurants.length);
+          goPlace = this.restaurants[ranNum];
+          let price = goPlace.restaurant.price_range;
+          if (this.state.priceRange.indexOf(price) !== -1) {
+            found = true;
+          }
+        }
+        let restaurantID = goPlace.restaurant["R"].res_id;
+        this.props.navigation.navigate(SCREENS.RESTAURANT, {
+          restaurantID: restaurantID
+        });
       }
     );
   }
