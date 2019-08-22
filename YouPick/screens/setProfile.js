@@ -49,7 +49,7 @@ class SetProfile extends Component {
       return;
     }
 
-    fetch("http://192.168.1.59:3000/db/setProfile", {
+    fetch("http://10.2.127.10:3000/db/setProfile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

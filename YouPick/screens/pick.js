@@ -95,12 +95,6 @@ class Pick extends React.Component {
         cuisines: [55, 159, 182, 168, 121]
       })
     ]).then(([res1, res2, res3, res4, res5]) => {
-      // console.log(
-      //   "RESTAURANTS",
-      //   res.restaurants,
-      //   "restaurant length ",
-      //   res.restaurants.length
-      // )
       this.restaurants = [
         ...res1.restaurants,
         ...res2.restaurants,

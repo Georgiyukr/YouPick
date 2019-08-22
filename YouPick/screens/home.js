@@ -22,7 +22,7 @@ var client = zomato({ userKey: "ca4658ce2aaad149ff89d86a0de8d2a3" });
 
 // log out function
 async function logOut(props) {
-  fetch("http://192.168.1.59:3000/db/logout", {
+  fetch("http://143.215.50.121:3000/db/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -74,7 +74,7 @@ class Home extends React.Component {
 
     var parsedResult = JSON.parse(user);
     await fetch(
-      `http://192.168.1.59:3000/db/setProfile/${parsedResult.username}`
+      `http://10.2.127.10:3000/db/setProfile/${parsedResult.username}`
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -122,139 +122,107 @@ class Home extends React.Component {
 
   async search() {
     console.log("HERE");
-    // client
-    //   .getCategories()
-    //   .then(response => console.log("CATEGORIES", response))
-    //   .catch(err => console.log("ERROR in getCATEGORIES", err));
-    //console.log(this.state.region.latitude, this.state.region.longitude);
-    // client
-    //   .getCities({
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude
-    //   })
-    //   .then(res => console.log("CITIES", res))
-    //   .catch(err => console.log(err));
-    // client
-    //   .getCuisines({ city_id: 288 })
-    //   .then(res => console.log("CUISINES", res))
-    //   .catch(err => console.log(err));
-    // client
-    //   .getEstablishments({ city_id: 288 })
-    //   .then(res => console.log("ESTABLISHMENTS", res))
-    //   .catch(err => console.log(err));
-    // client
-    //   .getLocationDetails({ entity_id: 36932, entity_type: "group" })
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
-    // client
-    //   .search({
-    //     entity_id: this.state.entity_id,
-    //     entity_type: this.state.entity_type,
-    //     lat: this.state.region.latitude,
-    //     lon: this.state.region.longitude,
-    //     count: 20,
-    //     cuisines: this.state.foodLiked,
-    //     radius: 5000
-    //   })
-    //   .then(res => console.log("FOOD", res))
-    //   .catch(err => console.log(err));
-    // console.log("RESPONSE", res1.json());
-    // console.log("FOOOOD", this.state.foodLiked);
-    // console.log(
-    //   this.state.entity_id,
-    //   this.state.entity_type,
-    //   this.state.region.latitude,
-    //   this.state.region.longitude,
-    //   this.state.foodLiked
-    // );
 
     let url1 = "https://developers.zomato.com/api/v2.1/search?";
     let url2 = "https://developers.zomato.com/api/v2.1/search?";
     let url3 = "https://developers.zomato.com/api/v2.1/search?";
     let url4 = "https://developers.zomato.com/api/v2.1/search?";
     let url5 = "https://developers.zomato.com/api/v2.1/search?";
-    // url += `user-key=ca4658ce2aaad149ff89d86a0de8d2a3`;
+
     url1 += `entity_id=${this.state.entity_id}`;
     url1 += `&entity_type=${this.state.entity_type}`;
     url1 += `&lat=${this.state.region.latitude}`;
     url1 += `&lon=${this.state.region.longitude}`;
+    url1 += `&start=0`;
     url1 += `&count=20`;
     url1 += `&cuisines=${this.state.foodLiked}`;
     url1 += `&radius=5000`;
 
-    fetch(url1, { headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" } })
-      .then(res => JSON.stringify(res))
-      .then(resJson => console.log(resJson))
-      .catch(err => console.log(err));
+    url2 += `entity_id=${this.state.entity_id}`;
+    url2 += `&entity_type=${this.state.entity_type}`;
+    url2 += `&lat=${this.state.region.latitude}`;
+    url2 += `&lon=${this.state.region.longitude}`;
+    url2 += `&start=20`;
+    url2 += `&count=20`;
+    url2 += `&cuisines=${this.state.foodLiked}`;
+    url2 += `&radius=5000`;
 
-    //   Promise.all([
-    //     client.search({
-    //       entity_id: this.state.entity_id,
-    //       entity_type: this.state.entity_type,
-    //       lat: this.state.region.latitude,
-    //       lon: this.state.region.longitude,
-    //       count: 20,
-    //       cuisines: this.state.foodLiked,
-    //       radius: 5000
-    //     }),
-    //     client.search({
-    //       entity_id: this.state.entity_id,
-    //       entity_type: this.state.entity_type,
-    //       lat: this.state.region.latitude,
-    //       lon: this.state.region.longitude,
-    //       count: 20,
-    //       start: 20,
-    //       cuisines: this.state.foodLiked,
-    //       radius: 5000
-    //     }),
-    //     client.search({
-    //       entity_id: this.state.entity_id,
-    //       entity_type: this.state.entity_type,
-    //       lat: this.state.region.latitude,
-    //       lon: this.state.region.longitude,
-    //       count: 20,
-    //       start: 40,
-    //       cuisines: this.state.foodLiked,
-    //       radius: 5000
-    //     }),
-    //     client.search({
-    //       entity_id: this.state.entity_id,
-    //       entity_type: this.state.entity_type,
-    //       lat: this.state.region.latitude,
-    //       lon: this.state.region.longitude,
-    //       count: 20,
-    //       start: 60,
-    //       cuisines: this.state.foodLiked,
-    //       radius: 5000
-    //     }),
-    //     client.search({
-    //       entity_id: this.state.entity_id,
-    //       entity_type: this.state.entity_type,
-    //       lat: this.state.region.latitude,
-    //       lon: this.state.region.longitude,
-    //       count: 20,
-    //       start: 80,
-    //       cuisines: this.state.foodLiked,
-    //       radius: 5000
-    //     })
-    //   ])
-    //     .then(([res1, res2, res3, res4, res5]) => {
-    //       console.log(
-    //         "RESTAURANTS",
-    //         res.restaurants,
-    //         "restaurant length ",
-    //         res.restaurants.length
-    //       );
-    //       // this.restaurants = [
-    //       //   ...res1.restaurants,
-    //       //   ...res2.restaurants,
-    //       //   ...res3.restaurants,
-    //       //   ...res4.restaurants,
-    //       //   ...res5.restaurants
-    //       // ];
-    //       // console.log("RESTAURANTS", this.restaurants);
-    //     })
-    //     .catch(err => console.log("ERROR in RESTAURANT SEARCH", err));
+    url3 += `entity_id=${this.state.entity_id}`;
+    url3 += `&entity_type=${this.state.entity_type}`;
+    url3 += `&lat=${this.state.region.latitude}`;
+    url3 += `&lon=${this.state.region.longitude}`;
+    url3 += `&start=40`;
+    url3 += `&count=20`;
+    url3 += `&cuisines=${this.state.foodLiked}`;
+    url3 += `&radius=5000`;
+
+    url4 += `entity_id=${this.state.entity_id}`;
+    url4 += `&entity_type=${this.state.entity_type}`;
+    url4 += `&lat=${this.state.region.latitude}`;
+    url4 += `&lon=${this.state.region.longitude}`;
+    url4 += `&start=60`;
+    url4 += `&count=20`;
+    url4 += `&cuisines=${this.state.foodLiked}`;
+    url4 += `&radius=5000`;
+
+    url5 += `entity_id=${this.state.entity_id}`;
+    url5 += `&entity_type=${this.state.entity_type}`;
+    url5 += `&lat=${this.state.region.latitude}`;
+    url5 += `&lon=${this.state.region.longitude}`;
+    url5 += `&start=80`;
+    url5 += `&count=20`;
+    url5 += `&cuisines=${this.state.foodLiked}`;
+    url5 += `&radius=5000`;
+
+    let prom1 = fetch(url1, {
+      headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" }
+    }).then(res => res.json());
+    let prom2 = fetch(url2, {
+      headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" }
+    }).then(res => res.json());
+    let prom3 = fetch(url3, {
+      headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" }
+    }).then(res => res.json());
+    let prom4 = fetch(url4, {
+      headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" }
+    }).then(res => res.json());
+    let prom5 = fetch(url5, {
+      headers: { "user-key": "ca4658ce2aaad149ff89d86a0de8d2a3" }
+    }).then(res => res.json());
+
+    Promise.all([prom1, prom2, prom3, prom4, prom5]).then(
+      ([res1, res2, res3, res4, res5]) => {
+        this.restaurants = [
+          ...res1.restaurants,
+          ...res2.restaurants,
+          ...res3.restaurants,
+          ...res4.restaurants,
+          ...res5.restaurants
+        ];
+        console.log("RESTAURANTS", this.restaurants);
+        // let ranNum = Math.floor(Math.random() * 100);
+        // console.log(ranNum);
+        // let names = [];
+        // this.restaurants.forEach(restaurant =>
+        //   names.push(restaurant.restaurant.name)
+        // );
+        // console.log(
+        //   //   "restaurant length",
+        //   //   this.restaurants.length,
+        //   //   "one restaurant",
+        //   //   JSON.stringify(this.restaurants[20], null, 2),
+        //   // "one restaurant name",
+        //   // this.restaurants[ranNum].restaurant.name,
+        //   "names",
+        //   names
+        // );
+
+        // let ranNum = Math.floor(Math.random() * 100);
+        // this.restaurantToGo = this.restaurants[ranNum].restaurant.name;
+
+        // console.log("RESTAURANT", this.restaurantToGo);
+      }
+    );
   }
 
   render() {
