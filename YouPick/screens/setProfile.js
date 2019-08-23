@@ -16,8 +16,6 @@ import {
 import { SCREENS } from "../constants";
 import MultiSelect from "react-native-multiple-select";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
-// import console = require("console");
-// import console = require("console");
 
 class SetProfile extends Component {
   static navigationOptions = props => ({
