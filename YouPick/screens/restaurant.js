@@ -15,10 +15,12 @@ import {
   ImageBackground,
   FlatList
 } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { List, ListItem, withTheme } from "react-native-elements";
 import { SCREENS } from "../constants";
+import StarRating from "react-native-star-rating";
 
 import * as Permissions from "expo-permissions";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 class Restaurant extends Component {
   constructor(props) {
@@ -63,6 +65,8 @@ class Restaurant extends Component {
         let cuisine = this.state.restaurant.cuisines;
         let phoneNumber = this.state.restaurant.phone_numbers.substring(0, 14);
         if (rating === 0) rating = undefined;
+        if (phoneNumber.length !== 14 || phoneNumber[0] !== "(")
+          phoneNumber = undefined;
         this.setState({
           phoneNumber,
           cuisine,
@@ -84,7 +88,137 @@ class Restaurant extends Component {
     console.log("RATING", this.state.rating);
     return (
       <View style={styles.container}>
-        <Text>{this.state.phoneNumber}</Text>
+        <View style={styles.restaurantView}>
+          <Text style={styles.name}>{this.state.name}</Text>
+          <Image
+            style={{
+              width: 300,
+              height: 200,
+              borderRadius: 5
+            }}
+            source={{
+              uri: this.state.image
+            }}
+          />
+          <Text
+            style={{
+              marginTop: 4,
+              color: "#7f7f7f",
+              fontStyle: "italic",
+              marginBottom: 4
+            }}
+          >
+            {this.state.cuisine}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontWeight: "bold", color: "#605152" }}>
+              Address:{" "}
+            </Text>
+            <TouchableOpacity>
+              <Text style={{ color: "#1973E8" }}>{this.state.address}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontWeight: "bold", color: "#605152" }}>
+              Cost for two:
+            </Text>
+            <TouchableOpacity>
+              <Text style={{ color: "#605152" }}>${this.state.costForTwo}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{ fontWeight: "bold", color: "#605152", marginRight: 5 }}
+            >
+              Rating:
+            </Text>
+            <StarRating
+              disabled={false}
+              maxStars={5}
+              rating={Number(this.state.rating)}
+              starSize={18}
+              starStyle={{ color: "#eaa510" }}
+            />
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 15
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: 140,
+                height: 43,
+                backgroundColor: "#a2444a",
+                borderRadius: 5,
+                alignSelf: "stretch",
+                padding: 10
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  textAlign: "center",
+                  justifyContent: "center"
+                }}
+              >
+                Again
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 140,
+                height: 43,
+                backgroundColor: "#28872d",
+                borderRadius: 5,
+                alignSelf: "stretch",
+                padding: 10
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  textAlign: "center",
+                  justifyContent: "center"
+                }}
+              >
+                Going!!
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={{
+              width: 300,
+              height: 43,
+              backgroundColor: "#000000",
+              borderRadius: 5,
+              alignSelf: "stretch",
+              padding: 10
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+                justifyContent: "center"
+              }}
+            >
+              Uber
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -110,5 +244,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // justifyContent: "center",
     backgroundColor: "#fff4f5"
+  },
+  restaurantView: {
+    width: 300,
+    height: 350,
+    marginTop: 20
+    // backgroundColor: "green"
+  },
+  name: {
+    fontWeight: "bold",
+    color: "#605152",
+    fontSize: 25,
+    marginBottom: 5
   }
 });
