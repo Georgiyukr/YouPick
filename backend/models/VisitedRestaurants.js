@@ -5,13 +5,16 @@ const visitedRestaurantsSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  id: {
+  userID: {
     type: String,
     required: true
   },
   cuisine: {
     type: String,
     required: true
+  },
+  rating: {
+    type: Number
   }
 });
 

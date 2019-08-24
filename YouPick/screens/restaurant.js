@@ -39,7 +39,8 @@ class Restaurant extends Component {
       cuisine: undefined,
       phoneNumber: undefined,
       priceRange: undefined,
-      loaded: false
+      loaded: false,
+      username: ""
     };
   }
 
@@ -91,6 +92,39 @@ class Restaurant extends Component {
         });
       });
   }
+  async visit() {
+    console.log("IN VISIT");
+    // await AsyncStorage.getItem("user").then(result => {
+    //   if (result === null) {
+    //     return;
+    //   }
+    //   var parsedResult = JSON.parse(result);
+    //   this.setState({ username: parsedResult.username });
+    // });
+
+    fetch("http://10.2.127.20:3000/db/visited", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      redirect: "follow",
+      body: JSON.stringify({
+        name: this.state.name,
+        cuisine: this.state.cuisine,
+        rating: this.state.rating
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        if (responseJson.success) console.log("VISITED");
+      })
+      .catch(err => {
+        alert(err);
+        console.log("ERROR IN SET PROFILE FETCH", err);
+      });
+  }
+
   render() {
     // console.log("PROPS", this.props.navigation.getParam("restaurantID"));
     console.log("RATING", this.state.rating);
@@ -197,6 +231,7 @@ class Restaurant extends Component {
                 padding: 10,
                 marginRight: 10
               }}
+              onPress={() => this.visit()}
             >
               <Text
                 style={{

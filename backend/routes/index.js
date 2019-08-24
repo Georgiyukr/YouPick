@@ -40,8 +40,9 @@ router.get("/setProfile/:username", (req, res) => {
 router.post("/visited", (req, res) => {
   const restaurant = new VisitedRestaurants({
     name: req.body.name,
-    id: req.body.id,
-    cuisine: req.body.cuisine
+    userID: req.user._id,
+    cuisine: req.body.cuisine,
+    rating: req.body.rating
   });
 
   restaurant
