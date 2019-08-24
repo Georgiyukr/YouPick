@@ -64,6 +64,14 @@ class Restaurant extends Component {
         let rating = this.state.restaurant.user_rating.aggregate_rating;
         let cuisine = this.state.restaurant.cuisines;
         let phoneNumber = this.state.restaurant.phone_numbers.substring(0, 14);
+
+        if (address.indexOf(",") !== -1) {
+          let index = address.indexOf(",");
+          address = address.substring(0, index);
+        } else if (address.indexOf(".") !== -1) {
+          let index = address.indexOf(".");
+          address = address.substring(0, index);
+        }
         if (rating === 0) rating = undefined;
         if (phoneNumber.length !== 14 || phoneNumber[0] !== "(")
           phoneNumber = undefined;
@@ -87,63 +95,70 @@ class Restaurant extends Component {
     // console.log("PROPS", this.props.navigation.getParam("restaurantID"));
     console.log("RATING", this.state.rating);
     return (
-      <View style={styles.container}>
-        <View style={styles.restaurantView}>
-          <Text style={styles.name}>{this.state.name}</Text>
-          <Image
-            style={{
-              width: 300,
-              height: 200,
-              borderRadius: 5
-            }}
-            source={{
-              uri: this.state.image
-            }}
-          />
-          <Text
-            style={{
-              marginTop: 4,
-              color: "#7f7f7f",
-              fontStyle: "italic",
-              marginBottom: 4
-            }}
-          >
-            {this.state.cuisine}
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "bold", color: "#605152" }}>
-              Address:{" "}
-            </Text>
-            <TouchableOpacity>
-              <Text style={{ color: "#1973E8" }}>{this.state.address}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "bold", color: "#605152" }}>
-              Cost for two:
-            </Text>
-            <TouchableOpacity>
-              <Text style={{ color: "#605152" }}>${this.state.costForTwo}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{ fontWeight: "bold", color: "#605152", marginRight: 5 }}
-            >
-              Rating:
-            </Text>
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              rating={Number(this.state.rating)}
-              starSize={18}
-              starStyle={{ color: "#eaa510" }}
+      <View style={{ backgroundColor: "#fff4f5" }}>
+        <View style={styles.container}>
+          <View style={styles.restaurantView}>
+            <Text style={styles.name}>{this.state.name}</Text>
+            <Image
+              style={{
+                width: 300,
+                height: 220,
+                borderRadius: 5
+              }}
+              source={{
+                uri: this.state.image
+              }}
             />
+            <Text
+              style={{
+                marginTop: 4,
+                color: "#7f7f7f",
+                fontStyle: "italic",
+                marginBottom: 4
+              }}
+            >
+              {this.state.cuisine}
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "bold", color: "#605152" }}>
+                Phone:
+              </Text>
+              <Text style={{ color: "#605152" }}>{this.state.phoneNumber}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "bold", color: "#605152" }}>
+                Address:{" "}
+              </Text>
+              <TouchableOpacity>
+                <Text style={{ color: "#1973E8" }}>{this.state.address}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "bold", color: "#605152" }}>
+                Cost for two:
+              </Text>
+              <Text style={{ color: "#605152" }}>${this.state.costForTwo}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{ fontWeight: "bold", color: "#605152", marginRight: 5 }}
+              >
+                Rating:
+              </Text>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={Number(this.state.rating)}
+                starSize={18}
+                fullStarColor={"#eaa510"}
+              />
+            </View>
           </View>
+        </View>
+        <View>
           <View
             style={{
               display: "flex",
-              flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
               marginTop: 15
@@ -156,7 +171,8 @@ class Restaurant extends Component {
                 backgroundColor: "#a2444a",
                 borderRadius: 5,
                 alignSelf: "stretch",
-                padding: 10
+                padding: 10,
+                marginLeft: 10
               }}
             >
               <Text
@@ -178,7 +194,8 @@ class Restaurant extends Component {
                 backgroundColor: "#28872d",
                 borderRadius: 5,
                 alignSelf: "stretch",
-                padding: 10
+                padding: 10,
+                marginRight: 10
               }}
             >
               <Text
@@ -194,30 +211,61 @@ class Restaurant extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
-        <View>
-          <TouchableOpacity
+
+          <View
             style={{
-              width: 300,
-              height: 43,
-              backgroundColor: "#000000",
-              borderRadius: 5,
-              alignSelf: "stretch",
-              padding: 10
+              marginTop: 10,
+              flexDirection: "row",
+              justifyContent: "space-between"
             }}
           >
-            <Text
+            <TouchableOpacity
               style={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: 20,
-                textAlign: "center",
-                justifyContent: "center"
+                width: 140,
+                height: 43,
+                backgroundColor: "#000000",
+                borderRadius: 5,
+                alignSelf: "stretch",
+                padding: 10,
+                marginLeft: 10
               }}
             >
-              Uber
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  textAlign: "center",
+                  justifyContent: "center"
+                }}
+              >
+                Uber
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 140,
+                height: 43,
+                backgroundColor: "#1973E8",
+                borderRadius: 5,
+                alignSelf: "stretch",
+                padding: 10,
+                marginRight: 10
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  textAlign: "center",
+                  justifyContent: "center"
+                }}
+              >
+                Maps
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -240,16 +288,15 @@ export default Restaurant;
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    flex: 1,
-    alignItems: "center",
+    // flex: 1,
+    alignItems: "center"
     // justifyContent: "center",
-    backgroundColor: "#fff4f5"
+    // backgroundColor: "#fff4f5"
   },
   restaurantView: {
     width: 300,
     height: 350,
     marginTop: 20
-    // backgroundColor: "green"
   },
   name: {
     fontWeight: "bold",
