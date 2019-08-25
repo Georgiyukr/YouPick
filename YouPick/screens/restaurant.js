@@ -40,11 +40,60 @@ class Restaurant extends Component {
       phoneNumber: undefined,
       priceRange: undefined,
       loaded: false,
-      username: ""
+      username: "",
+      latitude: this.props.navigation.state.params.latitude,
+      longitude: this.props.navigation.state.params.longitude,
+      restaurants: this.props.navigation.state.params.restaurantArray,
+      mypriceRange: this.props.navigation.state.params.priceRange
     };
   }
 
   componentDidMount() {
+    this.restaurantData();
+  }
+  visit() {
+    console.log("IN VISIT");
+    fetch("http://143.215.51.246:3000/db/visited", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      redirect: "follow",
+      body: JSON.stringify({
+        name: this.state.name,
+        cuisine: this.state.cuisine,
+        rating: this.state.rating
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        if (responseJson.success) console.log("VISITED");
+      })
+      .catch(err => {
+        alert(err);
+        console.log("ERROR IN SET PROFILE FETCH", err);
+      });
+  }
+
+  search() {
+    let goPlace;
+    let options = this.state.restaurants;
+    let found = false;
+    while (!found) {
+      let ranNum = Math.floor(Math.random() * options.length);
+      goPlace = options[ranNum];
+      let price = goPlace.restaurant.price_range;
+      if (this.state.mypriceRange.indexOf(price) !== -1) {
+        found = true;
+      }
+    }
+    let restaurantID = goPlace.restaurant["R"].res_id;
+    this.setState({ restaurantID: restaurantID });
+    this.restaurantData();
+  }
+
+  restaurantData() {
     let url = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${
       this.state.restaurantID
     }`;
@@ -90,38 +139,6 @@ class Restaurant extends Component {
           address,
           loaded: true
         });
-      });
-  }
-  async visit() {
-    console.log("IN VISIT");
-    // await AsyncStorage.getItem("user").then(result => {
-    //   if (result === null) {
-    //     return;
-    //   }
-    //   var parsedResult = JSON.parse(result);
-    //   this.setState({ username: parsedResult.username });
-    // });
-
-    fetch("http://10.2.127.20:3000/db/visited", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      redirect: "follow",
-      body: JSON.stringify({
-        name: this.state.name,
-        cuisine: this.state.cuisine,
-        rating: this.state.rating
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        if (responseJson.success) console.log("VISITED");
-      })
-      .catch(err => {
-        alert(err);
-        console.log("ERROR IN SET PROFILE FETCH", err);
       });
   }
 
@@ -195,7 +212,7 @@ class Restaurant extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: 15
+              marginTop: 20
             }}
           >
             <TouchableOpacity
@@ -208,6 +225,7 @@ class Restaurant extends Component {
                 padding: 10,
                 marginLeft: 10
               }}
+              onPress={() => this.search()}
             >
               <Text
                 style={{

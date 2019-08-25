@@ -22,7 +22,7 @@ var client = zomato({ userKey: "ca4658ce2aaad149ff89d86a0de8d2a3" });
 
 // log out function
 async function logOut(props) {
-  fetch("http://10.2.127.20:3000/db/logout", {
+  fetch("http://143.215.51.246:3000/db/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -74,7 +74,7 @@ class Home extends React.Component {
 
     var parsedResult = JSON.parse(user);
     await fetch(
-      `http://10.2.127.20:3000/db/setProfile/${parsedResult.username}`
+      `http://143.215.51.246:3000/db/setProfile/${parsedResult.username}`
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -211,7 +211,11 @@ class Home extends React.Component {
         }
         let restaurantID = goPlace.restaurant["R"].res_id;
         this.props.navigation.navigate(SCREENS.RESTAURANT, {
-          restaurantID: restaurantID
+          restaurantID: restaurantID,
+          latitude: this.state.region.latitude,
+          longitude: this.state.region.longitude,
+          restaurantArray: this.restaurants,
+          priceRange: this.state.priceRange
         });
       }
     );
